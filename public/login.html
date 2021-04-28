@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Page - Home</title>
+    <link rel="stylesheet" href="/site.css">
+</head>
+
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/catalog.html">Catalog</a>
+        <a href="/about.html">About</a>
+        <a href="/login.html">Login</a>
+    </nav>
+    <h1>Login</h1>
+    <p>Username: <input type="text" id="username"></p>
+    <p>Password: <input type="password" id="password"></p>
+    <p><button onclick="login()">Login</button></p>
+
+    <script>
+        function login() {
+            let username = document.getElementById('username').value;
+            let password = document.getElementById('password').value;
+
+            fetch('/login', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            }).then(res => res.json()).then(data => {
+                sessionStorage.setItem('token', data.token);
+            });
+        }
+    </script>
+</body>
+
+</html>
